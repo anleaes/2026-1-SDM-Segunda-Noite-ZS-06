@@ -2,7 +2,11 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+# patch de compatibilidade para linux
+import oracledb
+oracledb.version = "8.3.0"
+import sys
+sys.modules["cx_Oracle"] = oracledb
 
 def main():
     """Run administrative tasks."""
