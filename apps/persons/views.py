@@ -5,3 +5,6 @@ from .serializer import PersonSerializer
 
 
 # Create your views here.
+class PersonViewSet(viewsets.ModelViewSet):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer  
