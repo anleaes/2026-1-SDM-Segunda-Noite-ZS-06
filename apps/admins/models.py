@@ -7,3 +7,11 @@ class Admin(Person):
     password = models.CharField('Senha', max_length=128) 
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
     is_active = models.BooleanField('Ativo', default=True)
+
+    class Meta:
+        verbose_name = 'Administrador'
+        verbose_name_plural = 'Administradores'
+        ordering = ['username']
+
+    def __str__(self):
+        return self.username
