@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from .models import Developer
-from .serializer import DeveloperSerializer
+from .serializer import DeveloperSerializer, GenreSerializer, ConsoleSerializer
 
 class DeveloperViewSet(viewsets.ModelViewSet):
     queryset = Developer.objects.all()

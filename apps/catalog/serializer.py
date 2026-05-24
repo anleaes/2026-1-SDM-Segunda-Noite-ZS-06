@@ -11,6 +11,7 @@ class GenreSerializer(serializers.ModelSerializer):
         model = Genre
         fields = '__all__'
 
+# --- SUA NOVA CLASSE AQUI ---
 class ConsoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Console
