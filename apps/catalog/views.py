@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from .models import Developer
+from .models import Developer, Genre, Console
 from .serializer import DeveloperSerializer, GenreSerializer, ConsoleSerializer
 
 class DeveloperViewSet(viewsets.ModelViewSet):
