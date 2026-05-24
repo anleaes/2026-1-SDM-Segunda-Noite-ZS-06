@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'persons.apps.PersonsConfig',
     'users.apps.UsersConfig',
     'admins.apps.AdminsConfig',
+    'userProfile.apps.UserProfilesConfig',
     'catalog.apps.CatalogConfig',
 ]
 
