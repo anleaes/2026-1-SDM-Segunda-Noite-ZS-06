@@ -5,3 +5,6 @@ from .serializer import DeveloperSerializer
 class DeveloperViewSet(viewsets.ModelViewSet):
     queryset = Developer.objects.all()
     serializer_class = DeveloperSerializer
+from django.shortcuts import render
+
+# Create your views here.
