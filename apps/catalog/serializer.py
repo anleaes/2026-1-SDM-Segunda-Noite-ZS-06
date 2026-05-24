@@ -10,3 +10,8 @@ class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
         fields = '__all__'
+
+class ConsoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Console
+        fields = '__all__'
