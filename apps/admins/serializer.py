@@ -8,13 +8,11 @@ class AdminSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        # Remove a senha dos dados brutos
-        password = validated_data.pop('senha', None)
-        # Cria o objeto do usuário sem a senha primeiro
-        instance = self.Meta.model(**validated_data)
+        password = validated_data.pop('password', None)
         
+        instance = self.Meta.model(**validated_data)
+
         if password is not None:
-            # Encriptação da senha
             instance.set_password(password)
         
         instance.save()
