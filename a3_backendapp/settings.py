@@ -133,7 +133,7 @@ STATIC_URL = 'static/'
 
 REST_FRAMEWORK = {              #Configuração pra ninguém entrar sem estar logado, tem que logar antes, não mexe nisso, ainda to arrumando
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny', 
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
