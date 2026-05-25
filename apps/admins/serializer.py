@@ -4,4 +4,4 @@ from rest_framework import serializers
 class AdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Admin
-        fields = '__all__'
+        fields = ['first_name', 'last_name', 'birth_date', 'email', 'username', 'password']
