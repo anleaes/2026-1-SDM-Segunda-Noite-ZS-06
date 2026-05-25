@@ -7,13 +7,8 @@ from rest_framework.permissions import AllowAny
 
 # Create your views here.
 class AdminViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [permissions.AllowAny]
     authentication_classes = []
-
+    
     queryset = Admin.objects.all()
-    serializer_class = AdminSerializer  
-
-    def get_permissions(self):
-        if self.action == 'create':
-            return [permissions.AllowAny()] # Libera pra cirar conta de admin
-        return [permissions.IsAuthenticated()] # Tranca todas outras abas, a ideia é que sem login, esteja tudo trancado, menos a aba de criar conta
+    serializer_class = AdminSerializer
