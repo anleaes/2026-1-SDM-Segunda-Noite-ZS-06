@@ -8,8 +8,8 @@ router = DefaultRouter()
 # Rotas registradas:
 router.register(r'developer', views.DeveloperViewSet, basename='developer')
 router.register(r'genre', views.GenreViewSet, basename='genre')
-# Rota para consoles:
 router.register(r'console', views.ConsoleViewSet, basename='console')
+router.register(r'game', views.GameViewSet, basename='game')
 
 urlpatterns = [
     path('', include(router.urls)),

@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import Developer, Genre, Console
-from .serializer import DeveloperSerializer, GenreSerializer, ConsoleSerializer
+from .models import Developer, Genre, Console, Game
+from .serializer import DeveloperSerializer, GenreSerializer, ConsoleSerializer, GameSerializer
 
 class DeveloperViewSet(viewsets.ModelViewSet):
     queryset = Developer.objects.all()
@@ -13,6 +13,10 @@ class GenreViewSet(viewsets.ModelViewSet):
 class ConsoleViewSet(viewsets.ModelViewSet):
     queryset = Console.objects.all()
     serializer_class = ConsoleSerializer
+
+class GameViewSet(viewsets.ModelViewSet):
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer
 
 from django.shortcuts import render
 
