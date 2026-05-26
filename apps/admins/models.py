@@ -8,6 +8,17 @@ class Admin(Person):
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
     is_active = models.BooleanField('Ativo', default=True)
 
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    @property
+    def is_authenticated(self):
+        return True
+
     class Meta:
         verbose_name = 'Administrador'
         verbose_name_plural = 'Administradores'

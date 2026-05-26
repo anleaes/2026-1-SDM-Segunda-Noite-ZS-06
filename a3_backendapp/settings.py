@@ -140,3 +140,13 @@ REST_FRAMEWORK = {              #Configuração pra ninguém entrar sem estar lo
         'rest_framework.authentication.TokenAuthentication',
     ],
 }
+
+LOGOUT_REDIRECT_URL = '/api-auth/login/'
+
+LOGIN_REDIRECT_URL = '/usuarios/'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+AUTH_USER_MODEL = 'users.User'
