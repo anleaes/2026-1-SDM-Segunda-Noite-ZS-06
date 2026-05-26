@@ -1,13 +1,19 @@
 from django.db import models
 from persons.models import Person
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager
 
 # Create your models here.
+class UserManager(BaseUserManager):
+    def get_by_natural_key(self, username):
+        return self.get(username=username)
+
 class User(Person):
     username = models.CharField('Usuário', max_length=50, unique=True)
     password = models.CharField('Senha', max_length=128) 
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
     is_active = models.BooleanField('Ativo', default=True)
+
+    objects = UserManager()
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
