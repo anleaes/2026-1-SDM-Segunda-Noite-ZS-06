@@ -1,5 +1,6 @@
 from .models import User
 from rest_framework import serializers
+from django.contrib.auth.hashers import make_password
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,14 +9,6 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        password = validated_data.pop('password', None)
-        
-        # Cria a instância com o restante dos dados
-        instance = self.Meta.model(**validated_data)
-
-        if password is not None:
-            # Encripta a senha
-            instance.set_password(password)
-        
-        instance.save()
-        return instance
+        # Criptografa a senha antes de salvar
+        validated_data['password'] = make_password(validated_data['password'])
+        return super().create(validated_data)
