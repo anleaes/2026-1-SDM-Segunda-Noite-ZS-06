@@ -1,7 +1,7 @@
 from django.db import models
 from persons.models import Person
 from django.contrib.auth.models import BaseUserManager
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password, make_password
 
 # Create your models here.
 class UserManager(BaseUserManager):
@@ -16,11 +16,21 @@ class User(Person):
 
     objects = UserManager()
 
+    def set_password(self, raw_password):
+        self.password = make_password(raw_password)
+        self.save()
+
     def check_password(self, raw_password):
         return check_password(raw_password, self.password)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
+
+    is_staff = True  
+    is_active = True 
+    
+    def has_perm(self, perm, obj=None): return True
+    def has_module_perms(self, app_label): return True
 
     @property
     def is_anonymous(self):
