@@ -4,6 +4,29 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.hashers import check_password, make_password
 
 class UserManager(BaseUserManager):
+    def create_user(self, username, email, password=None):
+        if not username:
+            raise ValueError('O usuário deve ter um nome')
+        
+        user = self.model(
+            username=username,
+            email=self.normalize_email(email),
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, username, email, password=None):
+        user = self.create_user(
+            username=username,
+            email=email,
+            password=password,
+        )
+        # Define que este usuário é o "Supremo"
+        user._is_superuser = True 
+        user.save(using=self._db)
+        return user
+
     def get_by_natural_key(self, username):
         return self.get(username=username)
 
@@ -12,6 +35,8 @@ class User(Person):
     password = models.CharField('Senha', max_length=128) 
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
     is_active = models.BooleanField('Ativo', default=True)
+
+    is_superuser = models.BooleanField('Superusuário', default=False)
 
     objects = UserManager()
 
