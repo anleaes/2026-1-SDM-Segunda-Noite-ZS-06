@@ -22,8 +22,7 @@ class UserManager(BaseUserManager):
             email=email,
             password=password,
         )
-        # Define que este usuário é o "Supremo"
-        user._is_superuser = True 
+        user.is_superuser = True 
         user.save(using=self._db)
         return user
 
@@ -35,7 +34,6 @@ class User(Person):
     password = models.CharField('Senha', max_length=128) 
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
     is_active = models.BooleanField('Ativo', default=True)
-
     is_superuser = models.BooleanField('Superusuário', default=False)
 
     objects = UserManager()
@@ -43,7 +41,6 @@ class User(Person):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
-    
     @property
     def is_authenticated(self):
         return True
@@ -54,9 +51,8 @@ class User(Person):
 
     @property
     def is_staff(self):
-        return True
+        return self.is_superuser
 
-    
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
         self.save()
@@ -64,7 +60,6 @@ class User(Person):
     def check_password(self, raw_password):
         return check_password(raw_password, self.password)
 
-    
     def has_perm(self, perm, obj=None, **kwargs):
         return True
 
