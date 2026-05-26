@@ -29,8 +29,20 @@ class User(Person):
     is_staff = True  
     is_active = True 
     
-    def has_perm(self, perm, obj=None): return True
-    def has_module_perms(self, app_label): return True
+
+    @property
+    def is_staff(self):
+        return True
+
+    @property
+    def is_active(self):
+        return True
+    
+    def has_perm(self, perm, obj=None, **kwargs):
+        return True
+
+    def has_module_perms(self, app_label, **kwargs):
+        return True
 
     @property
     def is_anonymous(self):
