@@ -17,11 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView
+from users.views import logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('logout/', LogoutView.as_view(next_page='/api-auth/login/', http_method_names=['get', 'post']), name='logout'), #url do logout, tentando fazer funcionar
-    path('api-auth/', include('rest_framework.urls')), # permite o login no canto superior direito, estou trabalhando pra fazer isso dar certo, não mexe nisso
+    path('api-auth/logout/', logout_view, name='logout'),
+     path('api-auth/', include('rest_framework.urls')), # permite o login no canto superior direito, estou trabalhando pra fazer isso dar certo, não mexe nisso
     path('pessoas/', include('persons.urls', namespace='persons')),
     path('usuarios/', include('users.urls', namespace='users')),
     path('jogos/', include('catalog.urls', namespace='catalog')),
