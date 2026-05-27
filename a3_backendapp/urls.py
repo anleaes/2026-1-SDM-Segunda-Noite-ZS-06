@@ -19,10 +19,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')), # permite o login no canto superior direito, estou trabalhando pra fazer isso dar certo, não mexe nisso
     path('pessoas/', include('persons.urls', namespace='persons')),
     path('usuarios/', include('users.urls', namespace='users')),
     path('jogos/', include('catalog.urls', namespace='catalog')),
     path('administradores/', include('admins.urls', namespace='admins')),
     path('perfis de usuarios/', include('userProfile.urls', namespace='userProfile')),
-    path('api-auth/', include('rest_framework.urls')), # permite o login no canto superior direito, estou trabalhando pra fazer isso dar certo, não mexe nisso
 ]
