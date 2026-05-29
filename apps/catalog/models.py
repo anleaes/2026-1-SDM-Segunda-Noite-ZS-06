@@ -1,5 +1,23 @@
 from django.db import models
 
+class Game(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    release_year = models.IntegerField()
+    cover_image = models.ImageField(upload_to='games/', blank=True, null=True)
+    average_rating = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True)
+    
+    # As aspas salvam a vida e evitam o NameError:
+    developer = models.ForeignKey('Developer', on_delete=models.CASCADE, related_name='games')
+    genre = models.ManyToManyField('Genre', related_name='games')
+    consoles = models.ManyToManyField('Console', related_name='games')
+
+    def __str__(self):
+        return self.title
+
+    def __str__(self):
+        return self.name
+
 class Developer(models.Model):
     name = models.CharField(max_length=200)
     country = models.CharField(max_length=100)
@@ -21,20 +39,12 @@ class Console(models.Model):
     def __str__(self):
         return self.name
 
-class Game(models.Model):
-    title = models.CharField(max_length=200)
+class Screenshot(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='screenshots')
+    image = models.ImageField(upload_to='screenshots/')
     description = models.TextField(blank=True, null=True)
-    release_year = models.IntegerField()
-    cover_image = models.ImageField(upload_to='games/', blank=True, null=True)
-    average_rating = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True)
-    
-    # As aspas salvam a vida e evitam o NameError:
-    developer = models.ForeignKey('Developer', on_delete=models.CASCADE, related_name='games')
-    genre = models.ManyToManyField('Genre', related_name='games')
-    consoles = models.ManyToManyField('Console', related_name='games')
+    is_thumbnail = models.BooleanField(default=False)
+    upload_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
-
-    def __str__(self):
-        return self.name
+        return f"{self.game.title} - Screenshot {self.id}"
