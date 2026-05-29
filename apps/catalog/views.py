@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import Developer, Genre, Console, Game
-from .serializer import DeveloperSerializer, GenreSerializer, ConsoleSerializer, GameSerializer
+from .models import Developer, Genre, Console, Game, Screenshot
+from .serializer import DeveloperSerializer, GenreSerializer, ConsoleSerializer, GameSerializer, ScreenshotSerializer
 
 class DeveloperViewSet(viewsets.ModelViewSet):
     queryset = Developer.objects.all()
@@ -18,6 +18,9 @@ class GameViewSet(viewsets.ModelViewSet):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
 
+class ScreenshotViewSet(viewsets.ModelViewSet):
+    queryset = Screenshot.objects.all()
+    serializer_class = ScreenshotSerializer
+
 from django.shortcuts import render
 
-# Create your views here.
