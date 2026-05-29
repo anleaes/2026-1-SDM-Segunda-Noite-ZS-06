@@ -18,7 +18,7 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APPS_DIR = os.path.join(BASE_DIR, 'apps') 
-sys.path.insert(0, APPS_DIR) 
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 
 # Quick-start development settings - unsuitable for production.
@@ -34,6 +34,8 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+
+AUTH_USER_MODEL = 'persons.Person'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -130,3 +132,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+REST_FRAMEWORK = {              #Configuração pra ninguém entrar sem estar logado, tem que logar antes, não mexe nisso, ainda to arrumando
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated', 
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+
+LOGOUT_REDIRECT_URL = '/api-auth/login/'
+
+LOGIN_REDIRECT_URL = '/usuarios/'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+LOGOUT_ON_GET = True

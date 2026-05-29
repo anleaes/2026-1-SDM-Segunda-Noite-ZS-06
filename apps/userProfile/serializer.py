@@ -4,4 +4,4 @@ from rest_framework import serializers
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = '__all__'
+        fields = ['id', 'avatar', 'bio', 'country', 'games_added'] # ao invés de '__all__', estou configurando isso, não mexe
