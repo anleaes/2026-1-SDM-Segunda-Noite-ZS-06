@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import Developer, Genre, Console, Game, Screenshot
-from .serializer import DeveloperSerializer, GenreSerializer, ConsoleSerializer, GameSerializer, ScreenshotSerializer
+from .models import Developer, Genre, Console, Game, Screenshot, Tag, GameTag
+from .serializer import DeveloperSerializer, GenreSerializer, ConsoleSerializer, GameSerializer, ScreenshotSerializer, TagSerializer, GameTagSerializer
 
 class DeveloperViewSet(viewsets.ModelViewSet):
     queryset = Developer.objects.all()
