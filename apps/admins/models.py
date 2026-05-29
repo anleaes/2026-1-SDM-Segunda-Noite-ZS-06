@@ -11,10 +11,6 @@ class Admin(Person):
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
     objects = UserManager()
 
-    @property
-    def is_staff(self):
-        return True
-
     class Meta:
         verbose_name = 'Administrador'
         verbose_name_plural = 'Administradores'
