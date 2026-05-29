@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Developer, Genre, Console, Game, Review, Screenshot
+from .models import Developer, Genre, Console, Game, Review, Screenshot, Tag, GameTag
 
 
     
@@ -27,4 +27,14 @@ class ConsoleSerializer(serializers.ModelSerializer):
 class ScreenshotSerializer(serializers.ModelSerializer):
     class Meta:
         model = Screenshot
+        fields = '__all__'
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = '__all__'
+
+class GameTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GameTag
         fields = '__all__'

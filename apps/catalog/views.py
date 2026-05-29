@@ -22,5 +22,13 @@ class ScreenshotViewSet(viewsets.ModelViewSet):
     queryset = Screenshot.objects.all()
     serializer_class = ScreenshotSerializer
 
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+
+class GameTagViewSet(viewsets.ModelViewSet):
+    queryset = GameTag.objects.all()
+    serializer_class = GameTagSerializer
+
 from django.shortcuts import render
 
