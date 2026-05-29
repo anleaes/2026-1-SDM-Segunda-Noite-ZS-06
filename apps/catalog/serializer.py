@@ -1,6 +1,14 @@
 from rest_framework import serializers
 from .models import Developer, Genre, Console, Game, Review, Screenshot
 
+
+    
+class GameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Game
+        fields = '__all__'
+
+
 class DeveloperSerializer(serializers.ModelSerializer):
     class Meta:
         model = Developer
@@ -14,16 +22,6 @@ class GenreSerializer(serializers.ModelSerializer):
 class ConsoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Console
-        fields = '__all__'
-    
-class GameSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Game
-        fields = '__all__'
-
-class ReviewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Review
         fields = '__all__'
 
 class ScreenshotSerializer(serializers.ModelSerializer):
