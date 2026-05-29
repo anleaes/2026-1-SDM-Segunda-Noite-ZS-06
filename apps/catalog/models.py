@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Game(models.Model):
     title = models.CharField(max_length=200)
@@ -45,6 +46,27 @@ class Screenshot(models.Model):
     description = models.TextField(blank=True, null=True)
     is_thumbnail = models.BooleanField(default=False)
     upload_date = models.DateTimeField(auto_now_add=True)
+
+class Review(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='reviews')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
+    rating = models.FloatField()
+    comment = models.TextField()
+    review_date = models.DateTimeField(auto_now_add=True)
+    recommended = models.BooleanField(default=True)
+
+class Screenshot(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='screenshots')
+    image = models.ImageField(upload_to='screenshots/')
+    description = models.TextField(blank=True, null=True)
+    is_thumbnail = models.BooleanField(default=False)
+    upload_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.game.title} - Screenshot {self.id}"
+
+    def __str__(self):
+        return f"Review de {self.user.username} para {self.game.title}"
 
     def __str__(self):
         return f"{self.game.title} - Screenshot {self.id}"

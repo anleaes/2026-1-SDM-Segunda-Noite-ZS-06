@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Developer, Genre, Console, Game, Screenshot
+from .models import Developer, Genre, Console, Game, Review, Screenshot
+
 
     
 class GameSerializer(serializers.ModelSerializer):
