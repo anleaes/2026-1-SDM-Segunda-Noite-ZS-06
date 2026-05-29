@@ -1,11 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-class Person(models.Model):
-    first_name = models.CharField('Nome', max_length=50)
-    last_name = models.CharField('Sobrenome', max_length=100)
+class Person(AbstractUser):
+    #Esses atributos vem do AbstractUser, coloquei aqui pra exemplificar o models do Persons
+
+    #first_name = models.CharField('Nome', max_length=50)
+    #last_name = models.CharField('Sobrenome', max_length=100)
+    # #email = models.EmailField('E-mail',null=False, blank=False)
+
     birth_date = models.DateField('Data de Nascimento', null=True, blank=True)
-    email = models.EmailField('E-mail',null=False, blank=False)
 
     class Meta:
         verbose_name = 'Pessoa'

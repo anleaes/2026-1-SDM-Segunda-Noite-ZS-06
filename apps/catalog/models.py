@@ -8,7 +8,6 @@ class Game(models.Model):
     cover_image = models.ImageField(upload_to='games/', blank=True, null=True)
     average_rating = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True)
     
-    # As aspas salvam a vida e evitam o NameError:
     developer = models.ForeignKey('Developer', on_delete=models.CASCADE, related_name='games')
     genre = models.ManyToManyField('Genre', related_name='games')
     consoles = models.ManyToManyField('Console', related_name='games')
