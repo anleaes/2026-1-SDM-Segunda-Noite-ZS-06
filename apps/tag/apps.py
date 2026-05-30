@@ -1,6 +1,5 @@
 from django.apps import AppConfig
 
-
-class TempTagConfig(AppConfig):
+class TagConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'temp_tag'
+    name = 'apps.tag'
