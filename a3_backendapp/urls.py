@@ -25,7 +25,12 @@ urlpatterns = [
      path('api-auth/', include('rest_framework.urls')), # permite o login no canto superior direito, estou trabalhando pra fazer isso dar certo, não mexe nisso
     path('pessoas/', include('persons.urls', namespace='persons')),
     path('usuarios/', include('users.urls', namespace='users')),
-    path('jogos/', include('catalog.urls', namespace='catalog')),
+    path('jogos/', include('apps.game.urls', namespace='game')),
+    path('developer/', include('apps.developer.urls', namespace='developer')),
+    path('genre/', include('apps.genre.urls', namespace='genre')),
+    path('console/', include('apps.console.urls', namespace='console')),
+    path('review/', include('apps.review.urls', namespace='review')),
+    path('tag/', include('apps.tag.urls', namespace='tag')),
     path('administradores/', include('admins.urls', namespace='admins')),
     path('perfis de usuarios/', include('userProfile.urls', namespace='userProfile')),
 ]

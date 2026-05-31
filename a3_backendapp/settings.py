@@ -49,6 +49,12 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'admins.apps.AdminsConfig',
     'userProfile.apps.UserProfileConfig',
+    'apps.game.apps.GameConfig',
+    'apps.developer.apps.DeveloperConfig',
+    'apps.genre.apps.GenreConfig',
+    'apps.console.apps.ConsoleConfig',
+    'apps.review.apps.ReviewConfig',
+    'apps.tag.apps.TagConfig',
 
 ]
 
