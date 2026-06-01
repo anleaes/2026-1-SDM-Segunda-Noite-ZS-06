@@ -5,7 +5,7 @@ from . import views
 
 app_name = 'console'
 router = routers.SimpleRouter()
-router.register(r'console', views.ConsoleViewSet, basename='console')
+router.register('', views.ConsoleViewSet, basename='console')
 
 urlpatterns = [
     path('', include(router.urls)),

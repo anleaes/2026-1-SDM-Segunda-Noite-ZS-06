@@ -5,7 +5,7 @@ from . import views
 
 app_name = 'tag'
 router = routers.SimpleRouter()
-router.register(r'tag', views.TagViewSet, basename='tag')
+router.register('', views.TagViewSet, basename='tag')
 router.register(r'gametag', views.GameTagViewSet, basename='gametag')
 
 urlpatterns = [

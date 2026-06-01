@@ -5,7 +5,7 @@ from . import views
 
 app_name = 'review'
 router = routers.SimpleRouter()
-router.register(r'review', views.ReviewViewSet, basename='review')
+router.register('', views.ReviewViewSet, basename='review')
 
 urlpatterns = [
     path('', include(router.urls)),

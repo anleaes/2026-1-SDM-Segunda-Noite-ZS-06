@@ -5,7 +5,7 @@ from . import views
 
 app_name = 'genre'
 router = routers.SimpleRouter()
-router.register(r'genre', views.GenreViewSet, basename='genre')
+router.register('', views.GenreViewSet, basename='genre')
 
 urlpatterns = [
     path('', include(router.urls)),
