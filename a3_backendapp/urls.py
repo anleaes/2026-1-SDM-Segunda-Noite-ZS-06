@@ -20,9 +20,17 @@ from django.contrib.auth.views import LogoutView
 from users.views import logout_view
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import JsonResponse
+from django.views.decorators.csrf import ensure_csrf_cookie
+
+
+@ensure_csrf_cookie
+def set_csrf_token(request):
+    return JsonResponse({'detail': 'CSRF cookie set'})
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/set-csrf-cookie/', set_csrf_token, name='set-csrf-cookie'),
     path('api-auth/logout/', logout_view, name='logout'),
      path('api-auth/', include('rest_framework.urls')), # permite o login no canto superior direito, estou trabalhando pra fazer isso dar certo, não mexe nisso
     path('pessoas/', include('persons.urls', namespace='persons')),
