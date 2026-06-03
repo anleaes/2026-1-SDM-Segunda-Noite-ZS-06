@@ -42,7 +42,7 @@ urlpatterns = [
     path('review/', include('apps.review.urls', namespace='review')),
     path('tag/', include('apps.tag.urls', namespace='tag')),
     path('administradores/', include('admins.urls', namespace='admins')),
-    path('perfis de usuarios/', include('userProfile.urls', namespace='userProfile')),
+    path('perfil/', include('userProfile.urls', namespace='userProfile')),
 ]
 
 if settings.DEBUG:
@@ -50,3 +50,4 @@ if settings.DEBUG:
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT
     )
+
