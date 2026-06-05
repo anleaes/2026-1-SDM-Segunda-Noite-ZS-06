@@ -20,11 +20,13 @@ from django.contrib.auth.views import LogoutView
 from users.views import logout_view
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/logout/', logout_view, name='logout'),
     path('api-auth/', include('rest_framework.urls')), # permite o login no canto superior direito, estou trabalhando pra fazer isso dar certo, não mexe nisso
+    path('api/token/', obtain_auth_token, name='api_token_auth'),
     path('pessoas/', include('persons.urls', namespace='persons')),
     path('usuarios/', include('users.urls', namespace='users')),
     path('jogos/', include('apps.game.urls', namespace='game')),
