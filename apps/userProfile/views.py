@@ -21,5 +21,6 @@ class UserProfileViewSet(viewsets.ModelViewSet):
             return UserProfile.objects.none()
     
     def perform_create(self, serializer):
+        user_subclass = self.request.user.user
         # Isso daqui salva o perfil pra logar automaticamente, acho que funcionda
-        serializer.save(user=self.request.user)
+        serializer.save(user=user_subclass)
