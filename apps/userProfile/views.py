@@ -10,9 +10,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         user = self.request.user
-        # Se for um superusuário (Admin), ele vê todos os perfis para não dar erro
-        if user.is_superuser:
-            return UserProfile.objects.all()
+
         
         # Para usuários comuns, tenta filtrar. Se der erro de tipo, retorna vazio.
         try:
