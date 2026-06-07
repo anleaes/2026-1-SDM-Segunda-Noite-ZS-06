@@ -11,8 +11,11 @@ class ScreenshotViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Screenshot.objects.all()
-        # Permite que o app peça as fotos apenas do jogo atual (/screenshot/?game=5)
+        
+        # Permite que o app peça as fotos apenas do jogo atual
         game_id = self.request.query_params.get('game', None)
         if game_id is not None:
             queryset = queryset.filter(game_id=game_id)
-        return queryset
+            
+        # A CORREÇÃO: Garante que a lista volte ordenada da foto mais antiga para a mais nova
+        return queryset.order_by('upload_date')
