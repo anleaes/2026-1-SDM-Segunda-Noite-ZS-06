@@ -1,10 +1,15 @@
 from rest_framework import viewsets
 from .models import Game, Screenshot
 from .serializer import GameSerializer, ScreenshotSerializer
+from rest_framework.exceptions import PermissionDenied
 
 class GameViewSet(viewsets.ModelViewSet):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
+
+    def perform_create(self, serializer):
+        # Na hora de salvar um jogo novo, carimba o usuário logado como o dono (added_by)
+        serializer.save(added_by=self.request.user)
 
 class ScreenshotViewSet(viewsets.ModelViewSet):
     serializer_class = ScreenshotSerializer
@@ -23,6 +28,8 @@ class ScreenshotViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         jogo = serializer.validated_data['game']
+
+        print(f"--- DEBUG: Dono do Jogo: {jogo.added_by} | Usuário Logado: {self.request.user} ---")
         
         # Verifica se o ID do usuário que mandou a requisição é igual ao ID do criador do jogo
         if jogo.added_by != self.request.user:
