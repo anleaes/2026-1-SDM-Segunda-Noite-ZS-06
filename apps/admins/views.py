@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Admin
 from rest_framework import viewsets, permissions
 from .serializer import AdminSerializer
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
 # Create your views here.
