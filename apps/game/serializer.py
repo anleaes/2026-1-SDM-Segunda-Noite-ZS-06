@@ -9,4 +9,4 @@ class GameSerializer(serializers.ModelSerializer):
 class ScreenshotSerializer(serializers.ModelSerializer):
     class Meta:
         model = Screenshot
-        fields = '__all__'
+        fields = ['id', 'game', 'image']

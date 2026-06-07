@@ -6,8 +6,8 @@ from . import views
 app_name = 'game'
 
 router = routers.SimpleRouter()
+router.register('screenshot', views.ScreenshotViewSet, basename='screenshot')
 router.register('', views.GameViewSet, basename='game')
-router.register(r'screenshot', views.ScreenshotViewSet, basename='screenshot')
 
 urlpatterns = [
     path('', include(router.urls)),
