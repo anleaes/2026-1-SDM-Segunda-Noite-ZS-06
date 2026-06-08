@@ -9,6 +9,12 @@ class TagViewSet(viewsets.ModelViewSet):
 
     # Só Admins criam categorias base (ex: "RPG", "Ação")
     def perform_create(self, serializer):
+
+        print("===== DEBUG DE CRIAÇÃO DE TAG =====")
+        print("USUÁRIO LOGADO:", self.request.user)
+        print("É ADMIN (is_staff)?:", self.request.user.is_staff)
+        print("===================================")
+
         if not self.request.user.is_staff:
             raise PermissionDenied("Acesso Negado: Apenas administradores podem criar novas categorias de Tags.")
         serializer.save(created_by=self.request.user)
