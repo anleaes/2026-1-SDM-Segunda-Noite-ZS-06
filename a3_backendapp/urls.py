@@ -24,10 +24,33 @@ from rest_framework.authtoken.views import obtain_auth_token
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+
 
 @ensure_csrf_cookie
 def set_csrf_token(request):
     return JsonResponse({'detail': 'CSRF cookie set'})
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_current_user(request):
+    """
+    Retorna os dados essenciais de quem está logado.
+    Como o Django unifica a sessão no request.user, buscamos as flags diretamente dele.
+    """
+    return JsonResponse({
+        'id': request.user.id,
+        'username': request.user.username,
+        'email': request.user.email,
+        'is_superuser': request.user.is_superuser,
+        'is_staff': request.user.is_staff
+    })
+
+
+
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,6 +58,9 @@ urlpatterns = [
     path('api-auth/logout/', logout_view, name='logout'),
     path('api-auth/', include('rest_framework.urls')), # permite o login no canto superior direito, estou trabalhando pra fazer isso dar certo, não mexe nisso
     path('api/token/', obtain_auth_token, name='api_token_auth'),
+
+    path('api/me/', get_current_user, name='current-user'),
+
     path('pessoas/', include('persons.urls', namespace='persons')),
     path('usuarios/', include('users.urls', namespace='users')),
     path('jogos/', include('apps.game.urls', namespace='game')),
