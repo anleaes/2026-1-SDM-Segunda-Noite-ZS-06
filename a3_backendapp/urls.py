@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth.views import LogoutView
 from users.views import logout_view 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -11,8 +10,6 @@ from django.shortcuts import redirect
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-
-# ---> A FERRAMENTA DEFINITIVA PARA BUSCAR MODELOS <---
 from django.apps import apps 
 
 @ensure_csrf_cookie
@@ -36,15 +33,17 @@ def get_current_user(request):
     })
 
 urlpatterns = [
-     path('', lambda request: redirect('game:list_games_view')),
+    # Redireciona a raiz para o catálogo de jogos
+    path('', lambda request: redirect('game:list_games_view')),
+    
     path('admin/', admin.site.urls),
     path('api/set-csrf-cookie/', set_csrf_token, name='set-csrf-cookie'),
     path('api-auth/logout/', logout_view, name='logout'),
     path('api-auth/', include('rest_framework.urls')), 
     path('api/token/', obtain_auth_token, name='api_token_auth'),
-
     path('api/me/', get_current_user, name='current-user'),
    
+    # Inclusão dos endpoints e caminhos de cada App
     path('pessoas/', include('persons.urls', namespace='persons')),
     path('usuarios/', include('users.urls', namespace='users')),
     path('jogos/', include('apps.game.urls', namespace='game')),
