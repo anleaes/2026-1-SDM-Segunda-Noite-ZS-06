@@ -7,4 +7,4 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ['id', 'avatar', 'bio', 'country', 'games_added', 'username'] # ao invés de '__all__', estou configurando isso, não mexe
+        fields = ['id', 'avatar', 'bio', 'country', 'games_added', 'username'] # ao invés de '__all__'
