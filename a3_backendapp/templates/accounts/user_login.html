@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Identifique-se{% endblock %}
+
+{% block body %}
+<div style="max-width: 400px; margin: 50px auto;" class="card">
+    <h2 style="text-align: center; margin-bottom: 20px;">Acessar Minha Conta</h2>
+    
+    {% if error %}
+        <div style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #f5c6cb;">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <p>
+            <label>Nome de usuário:</label>
+            <input type="text" name="username" required placeholder="Digite seu usuário">
+        </p>
+        <p>
+            <label>Senha:</label>
+            <input type="password" name="password" required placeholder="Digite sua senha">
+        </p>
+        <br />
+        <button type="submit" style="width: 100%; padding: 10px;">Entrar</button>
+    </form>
+    <p style="text-align: center; margin-top: 15px; font-size: 0.9em;">
+        Ainda não tem conta? <a href="{% url 'users:traditional_register_view' %}">Criar cadastro</a>
+    </p>
+</div>
+{% endblock %}

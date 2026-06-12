@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Novo Usuário{% endblock %}
+
+{% block body %}
+<div style="max-width: 500px; margin: 30px auto;" class="card">
+    <h2 style="text-align: center;">Criar Conta de Usuário</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <table cellpadding="8" style="width: 100%; background: none; box-shadow: none; border: none;">
+            {{ form.as_table }}
+        </table>
+        <br />
+        <button type="submit" style="width: 100%; padding: 10px;">Salvar Cadastro</button>
+    </form>
+    <p style="text-align: center; margin-top: 15px; font-size: 0.9em;">
+        Já possui cadastro? <a href="{% url 'users:traditional_login_view' %}">Fazer Login</a>
+    </p>
+</div>
+{% endblock %}
