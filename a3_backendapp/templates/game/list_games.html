@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Catálogo de Jogos{% endblock %}
+
+{% block body %}
+<br />
+<div style="margin: 20px;">
+    <h2>Catálogo de Jogos</h2>
+    
+    <!-- Formulário de Busca por título -->
+    <form action="{% url 'game:list_games_view' %}" method="GET" style="margin-bottom: 20px;">
+        <input type="text" name="query" value="{{ query }}" placeholder="Buscar por título..." style="padding: 5px; width: 250px;">
+        <button type="submit">Buscar</button>
+        {% if query %}
+            <a href="{% url 'game:list_games_view' %}"><button type="button">Limpar</button></a>
+        {% endif %}
+    </form>
+
+    <a href="{% url 'game:add_game_view' %}"><button>Adicionar Novo Jogo</button></a>
+    <br /><br />
+
+    <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: #157caf; color: white;">
+                <th>Capa</th>
+                <th>Título</th>
+                <th>Ano</th>
+                <th>Desenvolvedora</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for game in games %}
+                <tr>
+                    <td align="center">
+                        {% if game.cover_image %}
+                            <img src="{{ game.cover_image.url }}" width="80" style="border-radius: 4px;">
+                        {% else %}
+                            <span>Sem Capa</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <strong><a href="{% url 'game:view_game_view' game.id %}">{{ game.title }}</a></strong>
+                    </td>
+                    <td>{{ game.release_year }}</td>
+                    <td>{{ game.developer.name }}</td>
+                    <td>
+                        {% if game.added_by == user or user.is_staff %}
+                            <a href="{% url 'game:edit_game_view' game.id %}"><button style="width: 70px; height: 30px;">Editar</button></a>
+                            <a href="{% url 'game:delete_game_view' game.id %}" onclick="return confirm('Deseja mesmo excluir o jogo?');">
+                                <button style="width: 70px; height: 30px; background-color: #d9534f; color: white; border: none; cursor: pointer;">Excluir</button>
+                            </a>
+                        {% else %}
+                            <span style="color: gray; font-size: 0.9em;">Apenas leitura</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" align="center">Nenhum jogo encontrado.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ action }} Jogo{% endblock %}
+
+{% block body %}
+<br />
+<div style="margin: 20px; max-width: 600px; background: white; padding: 20px; border-radius: 8px; border: 1px solid #ccc;">
+    <h2>{{ action }} Jogo</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table cellpadding="10" style="width: 100%;">
+            {{ form.as_table }}
+        </table>
+        <br />
+        <button type="submit" style="background-color: #157caf; color: white; border: none; padding: 10px 20px; cursor: pointer;">
+            Salvar Jogo
+        </button>
+        <a href="{% url 'game:list_games_view' %}" style="margin-left: 10px;"><button type="button">Cancelar</button></a>
+    </form>
+</div>
+{% endblock %}

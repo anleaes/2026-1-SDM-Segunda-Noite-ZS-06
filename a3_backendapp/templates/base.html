@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}ReviewApp{% endblock %}</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'game:list_games_view' %}">Catálogo de Jogos</a> |
+        <a href="{% url 'game:add_game_view' %}">Cadastrar Jogo</a>
+    </nav>
+    <hr>
+    
+    {% block body %}
+    {% endblock %}
+</body>
+</html>
