@@ -1,17 +1,37 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/arquivo_com_estilos.css' %}">
     <title>{% block title %}ReviewApp{% endblock %}</title>
 </head>
 <body>
     <nav>
-        <a href="{% url 'game:list_games_view' %}">Catálogo de Jogos</a> |
-        <a href="{% url 'game:add_game_view' %}">Cadastrar Jogo</a>
+        <div>
+            <a href="{% url 'game:list_games_view' %}" style="font-size: 1.2em; font-weight: bold;">ReviewApp</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'game:list_games_view' %}">Catálogo</a>
+                <a href="{% url 'game:add_game_view' %}">Cadastrar Jogo</a>
+            {% endif %}
+        </div>
+        <div>
+            {% if user.is_authenticated %}
+                <span style="margin-right: 15px;">Olá, <strong><a href="{% url 'users:traditional_profile_view' %}" style="color: #3498db;">@{{ user.username }}</a></strong></span>
+                <a href="{% url 'users:traditional_logout_view' %}" style="color: #e74c3c;">Sair</a>
+            {% else %}
+                <a href="{% url 'users:traditional_login_view' %}">Entrar</a>
+                <a href="{% url 'users:traditional_register_view' %}" style="background-color: #3498db; padding: 6px 12px; border-radius: 4px;">Cadastrar-se</a>
+            {% endif %}
+        </div>
     </nav>
-    <hr>
-    
-    {% block body %}
-    {% endblock %}
+
+    <div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+        {% block body %}
+        {% endblock %}
+    </div>
+
+    <script src="{% static 'js/arquivo_com_javascript.js' %}"></script>
 </body>
 </html>
