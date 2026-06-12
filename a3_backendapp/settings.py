@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'persons.apps.PersonsConfig',
     'users.apps.UsersConfig',
     'admins.apps.AdminsConfig',
@@ -163,6 +164,8 @@ AUTHENTICATION_BACKENDS = [
 LOGOUT_ON_GET = True
 
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8081",
+    "http://127.0.0.1:8081",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
@@ -170,7 +173,10 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8081",
+    "http://127.0.0.1:8081",
     "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
 
 SESSION_COOKIE_SAMESITE = 'Lax'

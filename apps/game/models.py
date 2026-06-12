@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 class Game(models.Model):
     title = models.CharField(max_length=200)
@@ -6,6 +7,7 @@ class Game(models.Model):
     release_year = models.IntegerField()
     cover_image = models.ImageField(upload_to='games/', blank=True, null=True)
     average_rating = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True)
+    added_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='games_added', null=True, blank=True)
     
     developer = models.ForeignKey('developer.Developer', on_delete=models.CASCADE, related_name='games')
     genre = models.ManyToManyField('genre.Genre', related_name='games')

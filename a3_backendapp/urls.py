@@ -1,38 +1,48 @@
-"""
-URL configuration for a3_backendapp project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView
-from users.views import logout_view
+from users.views import logout_view 
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework.authtoken.views import obtain_auth_token
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+
+# ---> A FERRAMENTA DEFINITIVA PARA BUSCAR MODELOS <---
+from django.apps import apps 
 
 @ensure_csrf_cookie
 def set_csrf_token(request):
     return JsonResponse({'detail': 'CSRF cookie set'})
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_current_user(request):
+    # Em vez de importar o arquivo, pedimos o modelo direto pro coração do Django:
+    Admin = apps.get_model('admins', 'Admin')
+
+    # O Django vai olhar na sua tabela Admin para ver se o usuário logado existe lá
+    is_custom_admin = Admin.objects.filter(username=request.user.username).exists()
+
+    return JsonResponse({
+        'id': request.user.id,
+        'username': request.user.username,
+        'email': request.user.email,
+        'is_admin': is_custom_admin # Esta é a nova flag que o Vue vai ler
+    })
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/set-csrf-cookie/', set_csrf_token, name='set-csrf-cookie'),
     path('api-auth/logout/', logout_view, name='logout'),
-     path('api-auth/', include('rest_framework.urls')), # permite o login no canto superior direito, estou trabalhando pra fazer isso dar certo, não mexe nisso
+    path('api-auth/', include('rest_framework.urls')), 
+    path('api/token/', obtain_auth_token, name='api_token_auth'),
+
+    path('api/me/', get_current_user, name='current-user'),
+
     path('pessoas/', include('persons.urls', namespace='persons')),
     path('usuarios/', include('users.urls', namespace='users')),
     path('jogos/', include('apps.game.urls', namespace='game')),
@@ -50,4 +60,3 @@ if settings.DEBUG:
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT
     )
-
