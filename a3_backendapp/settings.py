@@ -78,7 +78,7 @@ ROOT_URLCONF = 'a3_backendapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'a3_backendapp/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
