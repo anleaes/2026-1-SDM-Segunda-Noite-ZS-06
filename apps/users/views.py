@@ -28,7 +28,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect, get_object_or_404
-from apps.userProfile.models import UserProfile
+from userProfile.models import UserProfile
 from .forms import UserRegisterForm
 
 def traditional_login_view(request):
