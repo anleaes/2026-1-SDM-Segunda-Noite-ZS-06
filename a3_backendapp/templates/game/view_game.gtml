@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ game.title }}{% endblock %}
+
+{% block body %}
+<br />
+<div style="margin: 20px; display: flex; gap: 30px; flex-wrap: wrap;">
+    <div style="flex: 2; min-width: 300px; background: white; padding: 20px; border-radius: 8px; border: 1px solid #ccc;">
+        <h1>{{ game.title }} ({{ game.release_year }})</h1>
+        <p><strong>Desenvolvedora:</strong> {{ game.developer.name }}</p>
+        <p><strong>Descrição:</strong> {{ game.description|default:"Sem descrição adicional." }}</p>
+        <p><strong>Plataformas:</strong> 
+            {% for console in game.consoles.all %}
+                {{ console.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p><strong>Gêneros:</strong> 
+            {% for genre in game.genre.all %}
+                {{ genre.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p><small>Enviado por: @{{ game.added_by.username }}</small></p>
+
+        <hr />
+        <h3>Capturas de Tela (Screenshots)</h3>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+            {% for ss in screenshots %}
+                <div style="border: 1px solid #ccc; padding: 5px; border-radius: 4px; text-align: center; background: #fafafa;">
+                    <img src="{{ ss.image.url }}" width="150" style="display: block; border-radius: 2px; margin-bottom: 5px;">
+                    <small style="display: block; color: #555;">{{ ss.description|default:"" }}</small>
+                    {% if game.added_by == user or user.is_staff %}
+                        <a href="{% url 'game:delete_screenshot_view' ss.id %}" onclick="return confirm('Deseja apagar esta screenshot?');" style="color: red; font-size: 0.85em; text-decoration: none;">Excluir</a>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p>Nenhuma imagem cadastrada para este jogo.</p>
+            {% endfor %}
+        </div>
+
+        {% if game.added_by == user or user.is_staff %}
+            <h4>Adicionar Captura de Tela</h4>
+            <form method="POST" enctype="multipart/form-data" style="background: #f4f4f4; padding: 15px; border-radius: 4px;">
+                {% csrf_token %}
+                {{ screenshot_form.as_p }}
+                <button type="submit" name="submit_screenshot">Enviar Imagem</button>
+            </form>
+        {% endif %}
+    </div>
+
+    <div style="flex: 1; min-width: 250px; background: white; padding: 20px; border-radius: 8px; border: 1px solid #ccc;">
+        <h3>Avaliações da Comunidade</h3>
+        
+        <div style="background: #fafafa; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px dashed #bbb;">
+            <h4>Deixar minha avaliação</h4>
+            <form method="POST">
+                {% csrf_token %}
+                {{ review_form.as_p }}
+                <button type="submit" name="submit_review" style="background-color: #157caf; color: white; border: none; padding: 8px 12px; cursor: pointer;">Publicar Avaliação</button>
+            </form>
+        </div>
+
+        <div style="max-height: 450px; overflow-y: auto;">
+            {% for review in reviews %}
+                <div style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px;">
+                    <strong>@{{ review.user.username }}</strong> 
+                    <span style="color: #f0ad4e; margin-left: 5px;">★ {{ review.rating }}</span>
+                    {% if review.recommended %}
+                        <span style="background: #5cb85c; color: white; font-size: 0.75em; padding: 2px 5px; border-radius: 3px; margin-left: 5px;">Recomendado</span>
+                    {% else %}
+                        <span style="background: #d9534f; color: white; font-size: 0.75em; padding: 2px 5px; border-radius: 3px; margin-left: 5px;">Não Recomendado</span>
+                    {% endif %}
+                    <p style="margin: 6px 0 0 0; font-style: italic; font-size: 0.95em;">"{{ review.comment }}"</p>
+                    <small style="color: gray; font-size: 0.8em;">{{ review.review_date|date:"d/m/Y H:i" }}</small>
+                </div>
+            {% empty %}
+                <p>Ainda não há avaliações para este título.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
