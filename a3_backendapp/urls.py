@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 from rest_framework.authtoken.views import obtain_auth_token
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.shortcuts import redirect
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -35,6 +36,7 @@ def get_current_user(request):
     })
 
 urlpatterns = [
+     path('', lambda request: redirect('game:list_games_view')),
     path('admin/', admin.site.urls),
     path('api/set-csrf-cookie/', set_csrf_token, name='set-csrf-cookie'),
     path('api-auth/logout/', logout_view, name='logout'),
@@ -42,7 +44,7 @@ urlpatterns = [
     path('api/token/', obtain_auth_token, name='api_token_auth'),
 
     path('api/me/', get_current_user, name='current-user'),
-
+   
     path('pessoas/', include('persons.urls', namespace='persons')),
     path('usuarios/', include('users.urls', namespace='users')),
     path('jogos/', include('apps.game.urls', namespace='game')),
